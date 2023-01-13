@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		671448CE2971CCE5006A39BF /* ProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671448CD2971CCE5006A39BF /* ProductScreen.swift */; };
 		67A670772970991100C6FFAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A670762970991100C6FFAC /* AppDelegate.swift */; };
 		67A670792970991100C6FFAC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A670782970991100C6FFAC /* SceneDelegate.swift */; };
 		67A6707B2970991100C6FFAC /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A6707A2970991100C6FFAC /* SearchScreen.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		671448CD2971CCE5006A39BF /* ProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreen.swift; sourceTree = "<group>"; };
 		67A670732970991100C6FFAC /* Productopedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Productopedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A670762970991100C6FFAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67A670782970991100C6FFAC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				67A6708C2971C3F500C6FFAC /* Controllers */,
-				67A6708B2971C3EE00C6FFAC /* Views */,
 				67A6708A2971C35A00C6FFAC /* Models */,
 				67A6707F2970991200C6FFAC /* Assets.xcassets */,
 				67A670812970991200C6FFAC /* LaunchScreen.storyboard */,
@@ -74,19 +75,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		67A6708B2971C3EE00C6FFAC /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		67A6708C2971C3F500C6FFAC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				67A670762970991100C6FFAC /* AppDelegate.swift */,
 				67A670782970991100C6FFAC /* SceneDelegate.swift */,
 				67A6707A2970991100C6FFAC /* SearchScreen.swift */,
+				671448CD2971CCE5006A39BF /* ProductScreen.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -161,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				671448CE2971CCE5006A39BF /* ProductScreen.swift in Sources */,
 				67A6707B2970991100C6FFAC /* SearchScreen.swift in Sources */,
 				67A670772970991100C6FFAC /* AppDelegate.swift in Sources */,
 				67A670792970991100C6FFAC /* SceneDelegate.swift in Sources */,

@@ -31,8 +31,19 @@ class SearchScreen: UIViewController, UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let searchURL: URL? = URL(string: "https://dummyjson.com/products/search?q=\(searchBar.text)")
         
-        
+        if let url = searchURL {
+            APIHandler.shared.getData(url: url) { (data, error) in
+                if let error = error {
+                    print(error)
+                }
+                guard let data = data else { return }
+                
+            }
+        } else {
+            return
+        }
     }
     
 

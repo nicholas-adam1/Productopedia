@@ -9,7 +9,8 @@ import UIKit
 
 class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var searchField = UISearchBar()
+    var products : [Product] = []
+    let searchField = UISearchBar()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
@@ -20,6 +21,8 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    // Collection View
     
     func setUpCollectionView() {
         view.addSubview(collectionView)
@@ -42,18 +45,30 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for:  indexPath) as! ProductCollectionViewCell
-        cell.textView.text = "hello"
+        
+        cell.textView.text = "\(products[indexPath.row].title)\n\n\(products[indexPath.row].brand)\n\n$\(products[indexPath.row].price)"
+        
+        let imageURL = URL(string: products[indexPath.row].images[0])!
+        URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    cell.imageView.image = image
+                }
+            }
+        }.resume()
         return cell
     }
     
+    // Search Field
+    
     func setupSearchField() {
-        searchField.delegate = self
         view.addSubview(searchField)
+        searchField.delegate = self
         
         searchField.translatesAutoresizingMaskIntoConstraints = false
                 
@@ -68,21 +83,29 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         
     }
     
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        let searchURL: URL? = URL(string: "https://dummyjson.com/products/search?q=\(searchBar.text)")
-//
-//        if let url = searchURL {
-//            APIHandler.shared.getData(url: url) { (data, error) in
-//                if let error = error {
-//                    print(error)
-//                }
-//                guard let data = data else { return }
-//
-//            }
-//        } else {
-//            return
-//        }
-//    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        let searchURL: URL? = URL(string: "https://dummyjson.com/products/search?q=\(text)")
+        
+        if let url = searchURL {
+            APIHandler.shared.getData(url: url) { (data, error) in
+                if let error = error {
+                    print(error)
+                }
+                guard let data = data else { return }
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(Response.self, from: data)
+                    self.products = response.products
+                    self.collectionView.reloadData()
+                } catch {
+                    return
+                }
+            }
+        } else {
+            return
+        }
+    }
     
 
 

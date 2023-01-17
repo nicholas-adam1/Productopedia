@@ -12,12 +12,14 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
     var products : [Product] = []
     let searchField = UISearchBar()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let errorLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Productopedia"
         setupSearchField()
         setUpCollectionView()
+        setUpErrorLabel()
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -56,15 +58,15 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             if let error = error {
                 print(error)
+                cell.imageView.image = UIImage(systemName: "exclamationmark.triangle")
+                cell.textView.text = "\(self.products[indexPath.row].title)\n\n\(self.products[indexPath.row].brand)"
             }
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     cell.imageView.image = image
-                    cell.textView.text = "\(self.products[indexPath.row].title)\n\n\(self.products[indexPath.row].brand)\n\n$\(self.products[indexPath.row].price)"
+                    cell.textView.text = "\(self.products[indexPath.row].title)\n\n\(self.products[indexPath.row].brand)"
                 }
-            } else {
-                return
-            }
+            } 
         }.resume()
         return cell
     }
@@ -102,6 +104,7 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
             APIHandler.shared.getData(url: url) { (data, error) in
                 if let error = error {
                     print(error)
+                    self.errorLabel.isHidden = false
                 }
                 guard let data = data else { return }
                 let decoder = JSONDecoder()
@@ -109,6 +112,7 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
                     let response = try decoder.decode(Response.self, from: data)
                     self.products = response.products
                     self.collectionView.reloadData()
+                    self.errorLabel.isHidden = true
                 } catch {
                     return
                 }
@@ -116,6 +120,26 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         } else {
             return
         }
+    }
+    
+    // MARK: - Error Label
+    
+    func setUpErrorLabel() {
+        view.addSubview(errorLabel)
+        
+        errorLabel.text = "An error occurred while searching"
+        errorLabel.textColor = .red
+        errorLabel.numberOfLines = 0
+        errorLabel.textAlignment = .center
+        errorLabel.isHidden = true
+        
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
     }
     
 

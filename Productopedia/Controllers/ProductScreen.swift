@@ -64,13 +64,12 @@ class ProductScreen: UIViewController, UICollectionViewDataSource, UICollectionV
         URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             if let error = error {
                 print(error)
+                cell.imageView.image = UIImage(systemName: "exclamationmark.triangle")
             }
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     cell.imageView.image = image
                 }
-            } else {
-                return
             }
         }.resume()
         return cell
@@ -80,6 +79,8 @@ class ProductScreen: UIViewController, UICollectionViewDataSource, UICollectionV
     
     func setUpTextView() {
         view.addSubview(textView)
+        
+        textView.font = .systemFont(ofSize: 20)
 
         textView.translatesAutoresizingMaskIntoConstraints = false
         

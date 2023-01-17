@@ -22,7 +22,7 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    // Collection View
+    // MARK: - Collection View
     
     func setUpCollectionView() {
         view.addSubview(collectionView)
@@ -53,18 +53,29 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         
         cell.textView.text = "\(products[indexPath.row].title)\n\n\(products[indexPath.row].brand)\n\n$\(products[indexPath.row].price)"
         
-        let imageURL = URL(string: products[indexPath.row].images[0])!
+        let imageURL = URL(string: products[indexPath.row].thumbnail)!
         URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            if let error = error {
+                print(error)
+            }
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     cell.imageView.image = image
                 }
+            } else {
+                return
             }
         }.resume()
         return cell
     }
     
-    // Search Field
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let nextScreen = ProductScreen()
+        nextScreen.data = products[indexPath.row]
+        present(nextScreen, animated: true, completion: nil)
+    }
+    
+    // MARK: - Search Field
     
     func setupSearchField() {
         view.addSubview(searchField)

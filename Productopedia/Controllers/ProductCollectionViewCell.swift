@@ -17,6 +17,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
     
     let textView: UITextView = {
         let textView = UITextView()
+        textView.isEditable = false
         return textView
     }()
     

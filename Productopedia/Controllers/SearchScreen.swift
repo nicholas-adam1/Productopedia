@@ -51,9 +51,8 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for:  indexPath) as! ProductCollectionViewCell
         
-        cell.textView.text = "\(products[indexPath.row].title)\n\n\(products[indexPath.row].brand)\n\n$\(products[indexPath.row].price)"
-        
         let imageURL = URL(string: products[indexPath.row].thumbnail)!
+        
         URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             if let error = error {
                 print(error)
@@ -61,6 +60,7 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     cell.imageView.image = image
+                    cell.textView.text = "\(self.products[indexPath.row].title)\n\n\(self.products[indexPath.row].brand)\n\n$\(self.products[indexPath.row].price)"
                 }
             } else {
                 return
@@ -95,7 +95,7 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else { return }
+        guard let text = searchBar.text?.trimmingCharacters(in: .whitespaces) else { return }
         let searchURL: URL? = URL(string: "https://dummyjson.com/products/search?q=\(text)")
         
         if let url = searchURL {

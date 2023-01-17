@@ -20,7 +20,7 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         setupSearchField()
         setUpCollectionView()
         setUpErrorLabel()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(hue: 0.4944, saturation: 0.41, brightness: 0.8, alpha: 1.0)
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -33,7 +33,8 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         collectionView.dataSource = self
         
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.estimatedItemSize = CGSize(width: 190,height: 95)
+        flowLayout.estimatedItemSize = CGSize(width: (view.frame.size.width/2) - 8,height: 95)
+        flowLayout.minimumLineSpacing = 2
         collectionView.collectionViewLayout = flowLayout
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +55,6 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for:  indexPath) as! ProductCollectionViewCell
         
         let imageURL = URL(string: products[indexPath.row].thumbnail)!
-        
         URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             if let error = error {
                 print(error)
@@ -65,6 +65,8 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
                 DispatchQueue.main.async {
                     cell.imageView.image = image
                     cell.textView.text = "\(self.products[indexPath.row].title)\n\n\(self.products[indexPath.row].brand)"
+                    cell.layer.borderWidth = 3
+                    cell.layer.borderColor = CGColor(gray: 0.9, alpha: 1)
                 }
             } 
         }.resume()
@@ -82,6 +84,12 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
     func setupSearchField() {
         view.addSubview(searchField)
         searchField.delegate = self
+        searchField.isTranslucent  = false
+        searchField.tintColor  = .gray
+        searchField.barTintColor = UIColor(hue: 0.4944, saturation: 0.41, brightness: 0.8, alpha: 1.0)
+        searchField.layer.borderWidth = 1
+        searchField.layer.borderColor = UIColor(hue: 0.4944, saturation: 0.41, brightness: 0.8, alpha: 1.0).cgColor
+        searchField.placeholder = "Search for a product"
         
         searchField.translatesAutoresizingMaskIntoConstraints = false
                 
@@ -90,9 +98,6 @@ class SearchScreen: UIViewController, UISearchBarDelegate, UICollectionViewDeleg
             searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchField.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        searchField.isTranslucent  = false
-        searchField.tintColor  = .gray
-        searchField.placeholder = "Search for a product"
         
     }
     

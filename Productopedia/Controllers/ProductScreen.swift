@@ -80,6 +80,7 @@ class ProductScreen: UIViewController, UICollectionViewDataSource, UICollectionV
     func setUpTextView() {
         view.addSubview(textView)
         
+        textView.text = "\(data.title)\n\n\(data.brand)\n\nPrice: $\(data.price)\n\nRating: \(data.rating)/5\n\n\(data.description)"
         textView.font = .systemFont(ofSize: 20)
 
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,8 +91,6 @@ class ProductScreen: UIViewController, UICollectionViewDataSource, UICollectionV
             textView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             textView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        textView.text = "\(data.title)\n\n\(data.brand)\n\nPrice: $\(data.price)\n\nRating: \(data.rating)/5\n\n\(data.description)"
     }
 
 

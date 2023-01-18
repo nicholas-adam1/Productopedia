@@ -22,7 +22,7 @@ For Productopedia, I decided on the MVC model as opposed to other design pattern
 
 #### Models
 
-Within the Models folder there is the API Handler, Product, and Response files. The API Handler is a class that can be reused throughout the application to retrieve data from the API, it is used in the search bar component to retrieve the API data when a user searches. The Product file houses the Product struct which is used to define the data required for a product. It is used throughout the application to assist in displaying the products from the search as well as displaying an individual product's details. The final model is the Response file which houses the Response struct. This is used to assist in gathering the data from the API request by imitating the API response thereby the response can be converted to an array of Products so that the products can be accessed correctly by the controllers. 
+Within the Models folder there is the API Handler, Product, and Response files. The API Handler is a class that can be reused throughout the application to retrieve data from the API, it is used in the search bar component to retrieve the API data when a user searches. The Product file houses the Product struct which is used to define the data required for a product. It is used throughout the application to assist in displaying the products from the search as well as displaying an individual product's details. The final model is the Response file which houses the Response struct. This is used to assist in gathering the data from the API request by imitating the API response thereby the response can be converted to an array of Products so that the data can be accessed correctly by the controllers. 
 
 #### Controllers
 
@@ -34,8 +34,18 @@ The Views folder houses the CarouselCell and ProductCollectionViewCell. The Caro
 
 ## Features
 
-<img src='./Assets.xcassets/SearchScreenPhoto.png' align="center"/>
+### Search Screen
+
 <img src='./Productopedia/Assets.xcassets/SearchScreenPhoto.png' align="center"/>
+
+> This screen is the first screen you see when opening the app. It has a title and search bar at the top and the collection view of products in the center. I decided to use a collection view to display the products because I wanted multiple columns of products to be displayed. Once a product is tapped, the app will load the product screen over this screen. 
+
+### Product Screen
+
+<img src='./Productopedia/Assets.xcassets/ProductScreenPhoto.png' align="center"/>
+
+> The product screen has a horizontally scrolled carousel of product images at the top and a text view detail of the product at the bottom. The carousel was made using a collection view to display the images as a carousel because of the high customizability of collection views. 
+
 
 ## Author
 

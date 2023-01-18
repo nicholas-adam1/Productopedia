@@ -34,8 +34,8 @@ The Views folder houses the CarouselCell and ProductCollectionViewCell. The Caro
 
 ## Features
 
-<img src='./Assets.xcassets/SearchScreenPhoto' align="center"/>
-<img src='./Productopedia/Assets.xcassets/SearchScreenPhoto' align="center"/>
+<img src='./Assets.xcassets/SearchScreenPhoto.png' align="center"/>
+<img src='./Productopedia/Assets.xcassets/SearchScreenPhoto.png' align="center"/>
 
 ## Author
 
